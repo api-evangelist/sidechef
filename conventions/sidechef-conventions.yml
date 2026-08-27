@@ -1,0 +1,115 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  https://business.sidechef.com/sb-documentation, live probes of the /v3/ surface, and the
+  publicly served widget bundle https://www.scgrocery.net/widget/v2/
+note: >-
+  SideChef publishes no API design guide, no OpenAPI and no reference. Every convention
+  below is either stated in the Shoppable Button documentation or demonstrated by a public
+  request. Anything not established that way is recorded as unknown rather than guessed.
+auth_style:
+  model: partner-scoped credential
+  component: data-partner-key HTML attribute
+  rest: HTTP Basic
+  self_service: false
+  see: authentication/sidechef-authentication.yml
+versioning:
+  style: path prefix (REST) and loader path segment (component)
+  rest_current: v3
+  rest_header_negotiation: none observed
+  component_current: v2
+  see: lifecycle/sidechef-lifecycle.yml
+error_envelope:
+  content_type: application/json
+  shape: "{success, data, error} on the widget API; {status_code, error} on failures"
+  rfc9457: false
+  see: errors/sidechef-problem-types.yml
+idempotency:
+  supported: unknown
+  documented: false
+  header: none documented
+  note: >-
+    No idempotency key, request-token or replay-protection mechanism appears in the
+    documentation or in the widget bundle's request construction. Because the write surface
+    itself is undocumented, this is recorded as unknown rather than as absent. No
+    Idempotency pointer is asserted in apis.yml.
+pagination:
+  supported: unknown
+  documented: false
+  note: >-
+    Not observable without partner credentials; no page, cursor, limit or offset parameter
+    appears in the client bundle's request construction for the recipes endpoint.
+field_expansion:
+  supported: unknown
+  documented: false
+metadata:
+  supported: unknown
+  documented: false
+request_id_tracing:
+  supported: false
+  documented: false
+  note: >-
+    No X-Request-Id, correlation or trace header is set by the client or returned on the
+    401 responses observed.
+rate_limit_signaling:
+  headers: none observed
+  status_on_exhaustion: not documented
+  see: rate-limits/sidechef-rate-limits.yml
+case_style:
+  wire: snake_case
+  client: camelCase
+  note: >-
+    The widget bundle applies a toCamel transform to every successful response payload,
+    which establishes that the wire format is snake_case.
+tracking_parameters:
+  documented: true
+  parameters: [utm_source, utm_medium, utm_campaign, uuid, link_raw_id]
+  constraints:
+  - Maximum 16 characters per UTM value.
+  - Alphanumeric characters and hyphens only; underscores are rejected.
+  - >-
+    data-retailers accepts lowercase letters and commas only; other characters raise a
+    client-side error.
+  docs: https://business.sidechef.com/sb-documentation
+client_events:
+  transport: window.postMessage
+  note: >-
+    Browser events, not server webhooks. See components/sidechef-components.yml for the
+    catalog. No HTTP callback surface is published, so no Webhooks or AsyncAPI pointer is
+    asserted.
+reversibility:
+  grade: na
+  applicable: false
+  rationale: >-
+    SideChef exposes no public write surface. The two observable v3 endpoints are a recipe
+    lookup (/v3/widget/recipes/) and a telemetry sink (/v3/widget/events/); the shopping
+    action the Shoppable Button performs is a hand-off that opens the RETAILER's cart in a
+    new window, so the mutation lands in Walmart, Target, Amazon Fresh or Instacart, not in
+    SideChef. Reversal of a basket is therefore the retailer's operation under the
+    retailer's terms, and SideChef documents no cancel, void, undo, delete or restore
+    operation of its own.
+  write_surfaces: []
+  reversal_operations: []
+  windows: []
+  caveat: >-
+    Partner-only write surfaces may exist behind the sales gate (the Recipe Management
+    System is a CMS and necessarily writes). They are not public, so no reversal path or
+    window is asserted here. No window is stated anywhere in SideChef's public
+    documentation and none is invented.
+dry_run_mode:
+  supported: na
+  documented: false
+  rationale: No public write surface; see reversibility.
+cross_references:
+  errors: errors/sidechef-problem-types.yml
+  lifecycle: lifecycle/sidechef-lifecycle.yml
+  authentication: authentication/sidechef-authentication.yml
+  rate_limits: rate-limits/sidechef-rate-limits.yml
+  components: components/sidechef-components.yml
+evidence:
+- url: https://business.sidechef.com/sb-documentation
+  status: 200
+- url: https://www.sidechef.com/v3/widget/recipes/
+  status: 401
+- url: https://www.scgrocery.net/widget/v2/
+  status: 200

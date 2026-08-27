@@ -1,0 +1,161 @@
+generated: '2026-08-27'
+method: searched
+source: https://business.sidechef.com/sb-documentation
+note: >-
+  SideChef's partner-facing surface is delivered primarily as embeddable client-side
+  components rather than as a documented REST API. The Shoppable Button is the only
+  component for which SideChef publishes a public integration guide; the remaining
+  components are named and described on the marketing site but carry no public technical
+  documentation and are obtained through a contact-sales motion.
+families:
+- family: Shoppable Commerce
+  components:
+  - name: Shoppable Recipe Button
+    version: v2
+    released: '2025-12-24'
+    status: current
+    docs: https://business.sidechef.com/sb-documentation
+    description: >-
+      Renders below a partner's recipe ingredient list and lets a shopper send the whole
+      ingredient list to a supported grocery retailer's cart.
+    delivery: async <script> tag placed near the end of <body>
+    loader: https://www.scgrocery.net/widget/v2/
+    loader_pinned: false
+    mount: an element carrying the data-sidechef-shop-button attribute
+    attributes:
+    - name: data-sidechef-shop-button
+      required: true
+      description: Marks the host element as a SideChef widget mount point.
+    - name: data-partner-key
+      required: true
+      description: Partner authentication identifier issued by SideChef.
+    - name: data-style-button
+      required: false
+      values: [multi, single]
+      default: multi
+      description: Multi-retailer button row, or a single consolidated button.
+    - name: data-sidechef-href
+      required: false
+      description: Canonical URL of the recipe; defaults to the page canonical URL.
+    - name: data-retailers
+      required: false
+      values: [walmart, target, fresh, instacart]
+      description: Comma-separated retailer keys, rendered in the order supplied.
+    - name: data-button-text
+      required: false
+      description: Custom button label; single-button mode only.
+    - name: data-header-text
+      required: false
+      description: Header text rendered above the button.
+    - name: data-header-text-color
+      required: false
+      description: Header text color.
+    - name: data-disable-powered-by
+      required: false
+      description: Hides the "Powered by SideChef" attribution.
+    - name: data-disable-header
+      required: false
+      description: Hides the header text.
+    - name: data-disable-view-all
+      required: false
+      description: Hides the "View All" affordance in multi-button mode.
+    - name: data-highlight-ai-adapter
+      required: false
+      description: Opens the AI RecipeAdapt option; requires a RecipeAdapt license.
+    theming:
+      mechanism: CSS custom properties
+      variables:
+      - --sc-widget-button-border-radius
+      - --sc-widget-button-background-color
+      - --sc-widget-button-text-color
+      - --sc-widget-button-gap
+      - --sc-widget-font-family
+      - --sc-widget-header-color
+    events:
+      transport: window.postMessage
+      catalog:
+      - name: sidechef.widget_view
+        description: Button entered the viewport.
+      - name: sidechef.widget_click
+        description: User clicked the button.
+      - name: sidechef.viewedPage
+        description: Modal opened. Payload includes contentId.
+      - name: sidechef.changeRetailer
+        description: Retailer selection changed. Payload includes oldRetailer, newRetailer.
+      - name: sidechef.addToCart
+        description: Products added to cart. Payload includes retailer, store, products.
+      - name: sidechef.swapItem
+        description: >-
+          A product was substituted. Payload includes oldProductTitle, newProductTitle,
+          retailer, store.
+      note: >-
+        These are browser postMessage events consumed by the embedding page. They are NOT
+        server-to-server webhooks and SideChef publishes no HTTP callback surface, so no
+        Webhooks or AsyncAPI pointer is asserted for this provider.
+    tracking:
+      parameters: [utm_source, utm_medium, utm_campaign]
+      constraints:
+      - Maximum 16 characters per value.
+      - Alphanumeric characters and hyphens only; underscores are not supported.
+  - name: Shoppable Recipe Button (legacy)
+    version: v1
+    status: deprecated
+    deprecated: '2025-12-24'
+    docs: https://business.sidechef.com/sb-documentation-v1
+    loader: https://www.scgrocery.net/widget/
+    superseded_by: v2
+    description: >-
+      Superseded by v2. The v1 documentation page carries the deprecation notice and points
+      readers to the v2 guide. No migration guide is published.
+    attributes_removed_in_v2:
+    - data-text-color
+    - data-bg-color
+    - data-lang
+    - data-enabled-grocers
+    - data-disabled-grocers
+    - data-button-scale
+    attributes_renamed_in_v2:
+    - from: data-enabled-grocers / data-disabled-grocers
+      to: data-retailers
+- family: Recipe Discovery
+  components:
+  - name: Recipe Recommendation Row
+    status: marketed
+    docs: https://www.sidechef.com/business/recipe-site-widgets
+    description: >-
+      A recipe recommendation row placed on a partner product page, tailored to the product
+      on that page. Backed by the Recipe Recommendation API.
+    technical_documentation: none published
+  - name: On-Site Recipe Chat
+    status: marketed
+    docs: https://www.sidechef.com/business/recipe-site-widgets
+    description: >-
+      Conversational recipe search over a partner's recipe collection.
+    technical_documentation: none published
+- family: Recipe AI
+  components:
+  - name: RecipeAdapt
+    status: marketed
+    docs: https://www.sidechef.com/business/recipe-ai/personalize-recipes
+    description: >-
+      Automatically rewrites ingredient lists and cooking instructions for a dietary
+      constraint (gluten-free, vegetarian, budget). Offered as API access or as a
+      white-label widget.
+    delivery: [api, white-label widget]
+    technical_documentation: none published
+  - name: Food Photo Generator
+    status: marketed
+    docs: https://www.sidechef.com/business/
+    description: Generates recipe imagery from written recipes.
+    technical_documentation: none published
+evidence:
+- url: https://business.sidechef.com/sb-documentation
+  status: 200
+- url: https://business.sidechef.com/sb-documentation-v1
+  status: 200
+- url: https://www.scgrocery.net/widget/v2/
+  status: 200
+  content_type: application/javascript
+  bytes: 329282
+- url: https://www.sidechef.com/business/recipe-site-widgets
+  status: 200

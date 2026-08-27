@@ -1,0 +1,112 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  Live probe of a published SideChef recipe page plus the Shoppable Button documentation.
+note: >-
+  Reward-only. Entries marked conforms:false record a standard that was checked and not
+  found; they are not a penalty and several are simply not applicable to a provider with no
+  public REST contract.
+standards:
+- id: schema.org/Recipe
+  category: domain-standard
+  market: food, recipe and grocery content
+  conforms: true
+  evidence:
+    url: https://www.sidechef.com/recipes/249035/classic_quiche_lorraine/
+    http_status: 200
+    location: >-
+      <script type="application/ld+json"> block in the page head
+    detail: >-
+      JSON-LD object with "@context":"https://schema.org/" and "@type":"Recipe", carrying
+      name, description, author, datePublished, image, keywords, nutrition,
+      recipeCategory, recipeCuisine, recipeIngredient, recipeInstructions, recipeYield and
+      totalTime.
+    scope: >-
+      Emitted on recipe detail pages across the catalog, which is the surface SideChef
+      licenses to partners. This is the machine-readable contract SideChef actually
+      publishes at scale.
+  deviations:
+  - >-
+      The object emits both recipeIngredient and a legacy `ingredients` property. The
+      `ingredients` property was superseded by recipeIngredient in schema.org and is
+      retained here for older consumers.
+  - >-
+      No aggregateRating, review, cookTime, prepTime or recipeYield-as-QuantitativeValue,
+      so the markup is valid but not maximal against Google's recipe rich-result guidance.
+- id: schema.org/BreadcrumbList
+  category: domain-standard
+  conforms: true
+  evidence:
+    url: https://www.sidechef.com/recipes/249035/classic_quiche_lorraine/
+    http_status: 200
+    detail: JSON-LD BreadcrumbList with itemListElement alongside the Recipe object.
+- id: sitemaps.org
+  category: discovery
+  conforms: true
+  evidence:
+    url: https://www.sidechef.com/sitemap.xml
+    http_status: 200
+    detail: >-
+      A valid sitemapindex partitioned into static, articles, wikis, press, partners,
+      categories, business and eleven recipe shards.
+- id: rfc9309-robots
+  category: discovery
+  conforms: true
+  evidence:
+    url: https://www.sidechef.com/robots.txt
+    http_status: 200
+    detail: >-
+      Standard robots.txt with a Sitemap directive and per-agent crawl-delay rules. Notably
+      disallows /v3/, which is the API path prefix.
+- id: rfc9457-problem-details
+  category: cross-cutting
+  conforms: false
+  evidence:
+    url: https://www.sidechef.com/v3/widget/recipes/
+    http_status: 401
+    detail: >-
+      Errors are application/json with a proprietary {status_code, error} envelope, not
+      application/problem+json.
+- id: oauth2
+  category: cross-cutting
+  conforms: false
+  evidence:
+    url: https://www.sidechef.com/.well-known/oauth-authorization-server
+    http_status: 404
+    detail: HTTP Basic and a partner key; no OAuth 2.0 anywhere on the public surface.
+- id: oidc
+  category: cross-cutting
+  conforms: false
+  evidence:
+    url: https://www.sidechef.com/.well-known/openid-configuration
+    http_status: 404
+- id: openapi
+  category: cross-cutting
+  conforms: false
+  evidence:
+    url: https://api.sidechef.com/openapi.json
+    http_status: 404
+    detail: >-
+      No OpenAPI, Swagger, GraphQL SDL, AsyncAPI, gRPC or WSDL contract found on any
+      SideChef-controlled host. See x-coverage in apis.yml.
+- id: rfc9116-security-txt
+  category: cross-cutting
+  conforms: false
+  evidence:
+    url: https://www.sidechef.com/.well-known/security.txt
+    http_status: 404
+- id: rfc8594-sunset-header
+  category: cross-cutting
+  conforms: false
+  evidence:
+    url: https://www.sidechef.com/v3/widget/recipes/
+    http_status: 401
+    detail: >-
+      A dated deprecation is published in prose for the widget component, but no Sunset or
+      Deprecation response header is emitted.
+compliance:
+  certifications_published: []
+  trust_center: none
+  note: >-
+    No SOC 2, ISO 27001, PCI, HIPAA or other certification is claimed on any public
+    SideChef page, and no trust center exists. No Compliance pointer is asserted.

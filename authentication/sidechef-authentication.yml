@@ -1,0 +1,83 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  https://business.sidechef.com/sb-documentation plus live unauthenticated probes of
+  https://www.sidechef.com/v3/widget/recipes/ and inspection of the publicly served widget
+  bundle at https://www.scgrocery.net/widget/v2/
+note: >-
+  Derived from probe evidence rather than from a securityScheme block: SideChef publishes
+  no OpenAPI and no authentication reference page. Nothing here is inferred beyond what a
+  public request or the publicly served JavaScript bundle demonstrates.
+docs: https://business.sidechef.com/sb-documentation
+summary: >-
+  Access is partner-scoped and issued by SideChef through a sales conversation. There is no
+  self-service signup, no developer portal, no key-management console, and no OAuth. The
+  partner identifier is carried in markup for the embedded component, and the REST surface
+  behind it uses HTTP Basic.
+schemes:
+- id: partnerKey
+  type: apiKey
+  in: html-attribute
+  name: data-partner-key
+  surface: Shoppable Button component
+  required: true
+  documented: true
+  docs: https://business.sidechef.com/sb-documentation
+  description: >-
+    Partner authentication identifier placed as a data attribute on the widget mount
+    element. Because it ships in page markup it is a public partner identifier, not a
+    secret credential.
+  rotation: not documented
+  scopes: none
+- id: httpBasic
+  type: http
+  scheme: basic
+  surface: SideChef Widget API (v3)
+  required: true
+  documented: false
+  description: >-
+    The widget bundle constructs an Authorization header of the form "Basic <credential>"
+    for its API calls. SideChef publishes no documentation for this scheme; it is recorded
+    here as observed behaviour of a publicly served script, not as a documented contract.
+  evidence: >-
+    The v2 widget bundle contains a fetch whose headers object sets
+    Authorization: "Basic " + <credential> alongside
+    Content-Type: application/json; charset=UTF-8.
+  rotation: not documented
+  scopes: none
+oauth2: false
+openid_connect: false
+mutual_tls: false
+unauthenticated_behaviour:
+  status: 401
+  content_type: application/json
+  body: '{"status_code":401,"error":"Authentication credentials were not provided."}'
+  www_authenticate_header: not returned
+  note: >-
+    The message is the Django REST Framework default, indicating the v3 surface is a DRF
+    application. No WWW-Authenticate challenge is emitted, so an agent cannot discover the
+    scheme from the response alone.
+access:
+  self_service: false
+  signup_url: none
+  process: contact sales via https://www.sidechef.com/business/contact-us
+  gate: sales-gate
+evidence:
+- url: https://www.sidechef.com/v3/widget/recipes/
+  status: 401
+  content_type: application/json
+- url: https://www.scgrocery.net/v3/widget/recipes/
+  status: 401
+  content_type: application/json
+- url: https://www.scgrocery.net/v3/widget/events/
+  status: 401
+  content_type: application/json
+- url: https://www.scgrocery.net/widget/v2/
+  status: 200
+  content_type: application/javascript
+- url: https://business.sidechef.com/sb-documentation
+  status: 200
+- url: https://www.sidechef.com/.well-known/openid-configuration
+  status: 404
+- url: https://www.sidechef.com/.well-known/oauth-authorization-server
+  status: 404

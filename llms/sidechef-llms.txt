@@ -1,0 +1,90 @@
+# SideChef
+
+> SideChef is a food-technology company that licenses recipe content, shoppable-commerce
+> infrastructure and recipe AI to food brands, grocery retailers, food-media publishers and
+> kitchen-appliance makers. Its partner surface is delivered mainly as embeddable browser
+> components rather than as a public API.
+
+generated: 2026-08-27
+method: generated
+source: apis.yml + artifacts in this repository (no /llms.txt is published by SideChef)
+
+## What an agent needs to know first
+
+SideChef publishes **no OpenAPI, GraphQL SDL, AsyncAPI, gRPC or WSDL contract**, no
+developer portal, and no public API reference. A live REST surface exists under the `/v3/`
+path prefix on `www.sidechef.com` and on the widget-delivery host `www.scgrocery.net`, but
+every endpoint returns HTTP 401 to an anonymous caller:
+
+    {"status_code":401,"error":"Authentication credentials were not provided."}
+
+Access is partner-scoped and issued through a sales conversation. There is no self-service
+signup, no key console, and no OAuth. An agent cannot integrate with SideChef unattended.
+
+## Observable API surface
+
+- `GET https://www.sidechef.com/v3/widget/recipes/` — shoppable recipe lookup. 401 without credentials.
+- `POST https://www.sidechef.com/v3/widget/events/` — widget telemetry sink. 401 without credentials.
+- Authentication: HTTP Basic on the REST surface; `data-partner-key` on the embedded component.
+- Wire format: JSON, snake_case, `{success, data, error}` envelope.
+- `robots.txt` disallows `/v3/` to crawlers.
+
+## Publicly documented integration surface
+
+The Shoppable Recipe Button is the only SideChef product with public technical
+documentation.
+
+- Documentation: https://business.sidechef.com/sb-documentation
+- Loader (v2, current): https://www.scgrocery.net/widget/v2/ — async `<script>`, unpinned
+- Loader (v1, deprecated 2025-12-24): https://www.scgrocery.net/widget/
+- Required attributes: `data-sidechef-shop-button`, `data-partner-key`
+- Retailers: walmart, target, fresh, instacart
+- Theming: CSS custom properties (`--sc-widget-*`)
+- Events: `window.postMessage` — `sidechef.widget_view`, `sidechef.widget_click`,
+  `sidechef.viewedPage`, `sidechef.changeRetailer`, `sidechef.addToCart`, `sidechef.swapItem`.
+  These are browser events, not server webhooks; SideChef publishes no HTTP callback surface.
+- UTM values: max 16 characters, alphanumeric and hyphens only (underscores rejected).
+
+## The contract SideChef does publish at scale
+
+Recipe detail pages carry schema.org JSON-LD. This is the machine-readable recipe data an
+agent can actually read without credentials.
+
+- Example: https://www.sidechef.com/recipes/249035/classic_quiche_lorraine/
+- `@type: Recipe` with name, description, author, datePublished, image, keywords, nutrition,
+  recipeCategory, recipeCuisine, recipeIngredient, recipeInstructions, recipeYield, totalTime
+- Also emits the legacy `ingredients` property alongside `recipeIngredient`
+- Sitemap index: https://www.sidechef.com/sitemap.xml (eleven recipe shards)
+
+## Products (no public technical documentation)
+
+- Recipe Recommendation API — recipe suggestions from user behaviour and cart contents
+- RecipeAdapt — rewrites ingredients and instructions for a dietary constraint; API or white-label widget
+- Recipe Recommendation Row — product-page recipe widget
+- On-Site Recipe Chat — conversational recipe search
+- Recipe Management System — hosted recipe CMS
+- Food Photo Generator — recipe imagery generation
+- Brand Awareness Campaign (CPM) and In-Recipe Campaign (CPO) — advertising products
+
+## Commercial
+
+- No pricing page. `/business/pricing` returns 404. All paths end in a demo request form.
+- No published rate limits, SLA, or status page.
+- Contact: https://www.sidechef.com/business/contact-us
+
+## Links
+
+- Website: https://www.sidechef.com/
+- Business / developer entry point: https://www.sidechef.com/business/
+- Shoppable Button documentation: https://business.sidechef.com/sb-documentation
+- Shoppable Button v1 (deprecated): https://business.sidechef.com/sb-documentation-v1
+- Insights / blog: https://www.sidechef.com/business/insights
+- Partners: https://www.sidechef.com/business/partners
+- Terms: https://www.sidechef.com/terms/
+- Privacy: https://www.sidechef.com/privacy-policy/
+
+## Not available
+
+No GitHub organization. No SDK on npm, PyPI or any registry. No CLI. No MCP server. No A2A
+agent card. No `/.well-known/` document on any host (all 404). No `security.txt`, no trust
+center, no published certifications, no bug bounty. No sandbox or test credentials.

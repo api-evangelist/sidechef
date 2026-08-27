@@ -1,0 +1,69 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, api.github.com org + repository search, and the
+  SideChef documentation
+package_count: 1
+official_sdk_count: 0
+note: >-
+  SideChef publishes no client SDK in any package registry and operates no GitHub
+  organization. Searches of npm, PyPI and GitHub returned no first-party artifact: every
+  GitHub repository matching "sidechef" is a third-party student project, clone or scraper,
+  none affiliated with the company. The one first-party distributable is the Shoppable
+  Button browser bundle, served from SideChef's own CDN host rather than a registry. No
+  SDKs pointer is asserted in apis.yml because there is no SDK.
+packages:
+- name: SideChef Shoppable Button v2
+  official: true
+  registry: cdn
+  url: https://www.scgrocery.net/widget/v2/
+  language: javascript
+  version: null
+  published: null
+  note: >-
+    CDN-distributed browser bundle with no registry metadata endpoint to query. The URL is
+    versioned only to the major (v2) and is otherwise UNPINNED — it floats to whatever
+    build SideChef last deployed, so a consumer cannot determine which build they are
+    loading and neither can we. The bundle carries no version string in its banner. Checked
+    against data.jsdelivr.com and unpkg: not mirrored, as it is not an npm package. Last
+    observed 2026-08-27 at 329,282 bytes, content-type application/javascript, HTTP 200.
+- name: SideChef Shoppable Button v1
+  official: true
+  registry: cdn
+  url: https://www.scgrocery.net/widget/
+  language: javascript
+  version: null
+  published: null
+  deprecated: '2025-12-24'
+  note: >-
+    Deprecated predecessor, still served. Same unpinned CDN distribution and no registry
+    metadata.
+registries_searched:
+- registry: npm
+  query: sidechef
+  result: no first-party package
+  endpoint: https://registry.npmjs.org/-/v1/search?text=sidechef
+- registry: pypi
+  query: sidechef
+  result: 404
+  endpoint: https://pypi.org/pypi/sidechef/json
+- registry: github
+  query: orgs/sidechef, orgs/SideChef, orgs/sidechef-inc
+  result: 404 on all three; no SideChef GitHub organization exists
+  endpoint: https://api.github.com/orgs/sidechef
+- registry: github-search
+  query: sidechef
+  result: >-
+    15 repositories, all third-party (student projects, app clones, one scraper). No
+    first-party repository.
+not_searched:
+- maven-central
+- nuget
+- rubygems
+- crates.io
+- packagist
+- pkg.go.dev
+not_searched_reason: >-
+  SideChef ships no server-side integration surface and no documented REST contract, so a
+  JVM/.NET/Ruby/Go/Rust client is implausible. Recorded as not checked rather than as
+  absent.

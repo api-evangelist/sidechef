@@ -1,0 +1,67 @@
+generated: '2026-08-27'
+method: searched
+source: https://business.sidechef.com/sb-documentation-v1
+versioning:
+  scheme: major path/loader version
+  rest_surface:
+    current: v3
+    evidence: >-
+      Live endpoints are served under the /v3/ path prefix (/v3/widget/recipes/,
+      /v3/widget/events/), and www.sidechef.com/robots.txt disallows /v3/ to crawlers.
+    documented: false
+    note: SideChef publishes no public reference or changelog for the v3 REST surface.
+  widget_surface:
+    current: v2
+    previous: v1
+    evidence: >-
+      The v2 loader is https://www.scgrocery.net/widget/v2/ and the v1 loader is
+      https://www.scgrocery.net/widget/. Both are separately documented.
+    documented: true
+deprecation:
+  policy_published: true
+  policy_form: >-
+    Per-version deprecation notice on the superseded documentation page, naming the
+    deprecation date and linking to the successor version. There is no separate,
+    company-wide deprecation policy document and no stated support window.
+  headers:
+    rfc8594_sunset: not observed
+    deprecation_header: not observed
+    note: >-
+      Not verifiable on the REST surface without partner credentials; unauthenticated
+      responses (401) carry no Sunset or Deprecation header.
+  deprecations:
+  - component: Shoppable Recipe Button v1
+    deprecated_on: '2025-12-24'
+    superseded_by: Shoppable Recipe Button v2
+    sunset_date: not stated
+    still_served: true
+    migration_guide: none published
+    docs: https://business.sidechef.com/sb-documentation-v1
+    quote: >-
+      "Ths document refers to v1 of the shoppable button, which has been deprecated since
+      12/24/2025. Please come here for the v2 of the button."
+status_page:
+  published: false
+  probed:
+  - url: https://status.sidechef.com/
+    status: null
+    note: DNS does not resolve.
+  note: >-
+    No status page, uptime history or incident feed was found on any SideChef host. No
+    StatusPage pointer is asserted.
+sla:
+  published: false
+  note: No public SLA. Terms of service govern the consumer product, not partner API uptime.
+support:
+  channel: https://www.sidechef.com/business/contact-us
+  form: contact-sales
+evidence:
+- url: https://business.sidechef.com/sb-documentation-v1
+  status: 200
+- url: https://business.sidechef.com/sb-documentation
+  status: 200
+- url: https://www.sidechef.com/robots.txt
+  status: 200
+- url: https://status.sidechef.com/
+  status: null
+  note: could not resolve host

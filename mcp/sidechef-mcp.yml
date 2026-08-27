@@ -1,0 +1,40 @@
+generated: '2026-08-27'
+method: none
+source: >-
+  Searches of SideChef's own hosts and documentation for a hosted or local MCP server,
+  2026-08-27
+status: not-found
+note: >-
+  No MCP server was found, and none could be derived: deriving a candidate tool list
+  requires an OpenAPI to enumerate operations from, and SideChef publishes no contract of
+  any kind. This file records the search so a later round does not repeat it. NO MCPServer
+  pointer is asserted in apis.yml — the artifact documents an absence, not a surface.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: searched
+probes:
+- url: https://www.sidechef.com/.well-known/ai-plugin.json
+  status: 404
+- url: https://business.sidechef.com/.well-known/ai-plugin.json
+  status: 404
+- url: https://www.sidechef.com/llms.txt
+  status: 404
+- url: https://business.sidechef.com/llms.txt
+  status: 404
+- registry: npm
+  query: sidechef
+  result: no MCP package
+- registry: github
+  query: orgs/sidechef
+  status: 404
+tools: []
+candidate_tools_derived: false
+candidate_tools_reason: >-
+  No OpenAPI, GraphQL SDL, AsyncAPI or other machine-readable contract exists to derive
+  operations from. The two endpoints observed live (/v3/widget/recipes/,
+  /v3/widget/events/) have no published parameters or schemas, so any tool definition would
+  be invented rather than derived.

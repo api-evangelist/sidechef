@@ -1,0 +1,68 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  Live unauthenticated responses from https://www.sidechef.com/v3/widget/recipes/ and
+  https://www.scgrocery.net/v3/widget/events/
+note: >-
+  SideChef publishes no error reference and no OpenAPI, so there are no declared 4xx/5xx
+  response objects to derive from. This catalog records only error shapes actually observed
+  on a public request, plus the client-side error handling visible in the publicly served
+  widget bundle. It is deliberately short: an unverified error code is worse than an absent
+  one.
+format: proprietary-json
+rfc9457: false
+rfc9457_note: >-
+  Responses are application/json, not application/problem+json, and carry no type, title,
+  detail, status or instance members. The envelope is the Django REST Framework default
+  shape wrapped with an explicit status_code.
+envelope:
+  content_type: application/json
+  fields:
+  - name: status_code
+    type: integer
+    description: Duplicates the HTTP status code in the body.
+  - name: error
+    type: string | object
+    description: >-
+      A human-readable message on transport-level failures. The widget bundle also handles
+      an object form (it reads Object.values(error.error) when error.error is an object),
+      indicating field-level validation errors are returned as a keyed map.
+  example: '{"status_code":401,"error":"Authentication credentials were not provided."}'
+  success_envelope:
+    fields: [success, data, error]
+    description: >-
+      The widget bundle branches on a top-level boolean `success`, reading `data` on
+      success and `error` on failure.
+problem_types:
+- code: 401
+  http_status: 401
+  title: Authentication credentials were not provided
+  observed: true
+  observed_on:
+  - https://www.sidechef.com/v3/widget/recipes/
+  - https://www.scgrocery.net/v3/widget/recipes/
+  - https://www.scgrocery.net/v3/widget/events/
+  meaning: >-
+    The request carried no Authorization header. The v3 surface admits no anonymous access
+    of any kind.
+  remediation: >-
+    Supply the partner credential issued by SideChef. There is no self-service path to
+    obtain one; access is arranged through https://www.sidechef.com/business/contact-us.
+  retryable: false
+gaps:
+- No published error-code registry.
+- >-
+    No 4xx or 5xx shape other than 401 could be observed without partner credentials; the
+    validation-error object shape is inferred from client code, not from a response, and no
+    specific field codes are asserted.
+- No Retry-After or rate-limit signalling observed on any response.
+evidence:
+- url: https://www.sidechef.com/v3/widget/recipes/
+  status: 401
+  content_type: application/json
+- url: https://www.scgrocery.net/v3/widget/recipes/
+  status: 401
+  content_type: application/json
+- url: https://www.scgrocery.net/v3/widget/events/
+  status: 401
+  content_type: application/json

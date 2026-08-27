@@ -1,18 +1,78 @@
 aid: sidechef
 name: SideChef
-description: 'SideChef is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  SideChef is a food-technology company that licenses recipe content, shoppable-commerce
+  and recipe-AI infrastructure to food brands, grocery retailers, food media publishers and
+  kitchen-appliance makers. Its consumer cooking platform doubles as a B2B platform whose
+  partner-facing surface is delivered three ways: embeddable JavaScript components (the
+  Shoppable Recipe Button, Recipe Recommendation Row, RecipeAdapt personalization widget
+  and an on-site recipe chat), a hosted Recipe Management System, and partner APIs such as
+  the Recipe Recommendation API and RecipeAdapt. The underlying v3 REST surface is live at
+  www.sidechef.com and the widget-delivery host www.scgrocery.net, but it is authenticated
+  per partner and SideChef publishes no OpenAPI, developer portal or public API reference;
+  the only public technical documentation is the Shoppable Button integration guide, and
+  API access runs through a contact-sales motion.
+image: https://cdn.prod.website-files.com/63b6aab1b5182398d5ad85ad/67bd6fdbf07c15c096431062_Bannerimg-1.png
 url: https://raw.githubusercontent.com/api-evangelist/sidechef/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-27'
 modified: '2026-08-27'
 tags:
 - Company
-apis: []
+- Food
+- Recipes
+- Retail
+- Grocery
+- Commerce
+- Advertising
+- Content
+- Widgets
+- Artificial Intelligence
+- Nutrition
+- Media
+apis:
+- aid: sidechef:widget-api
+  name: SideChef Widget API (v3)
+  description: >-
+    The live REST surface behind SideChef's embeddable partner widgets. Observed endpoints
+    include /v3/widget/recipes/ (shoppable recipe lookup and cart hand-off) and
+    /v3/widget/events/ (widget telemetry). Every request is authenticated per partner; an
+    unauthenticated call returns HTTP 401 with a JSON error envelope. SideChef publishes no
+    OpenAPI, no public reference and no developer portal for this surface.
+  humanURL: https://business.sidechef.com/sb-documentation
+  baseURL: https://www.sidechef.com/v3/
+  tags:
+  - Recipes
+  - Commerce
+  - Grocery
+  properties:
+  - type: Authentication
+    url: authentication/sidechef-authentication.yml
+  - type: ErrorCatalog
+    url: errors/sidechef-problem-types.yml
+  - type: Conventions
+    url: conventions/sidechef-conventions.yml
+- aid: sidechef:shoppable-button
+  name: SideChef Shoppable Button
+  description: >-
+    A partner-embeddable JavaScript component that turns a recipe ingredient list on a
+    partner site into a multi-retailer add-to-cart experience (Walmart, Target, Amazon
+    Fresh, Instacart). Integration is declarative via data-* attributes on a host element,
+    themed with CSS custom properties, and instrumented with a postMessage event stream.
+    Version 2 is current; version 1 was deprecated on 2025-12-24.
+  humanURL: https://business.sidechef.com/sb-documentation
+  baseURL: https://www.scgrocery.net/widget/v2/
+  tags:
+  - Widgets
+  - Commerce
+  - Grocery
+  properties:
+  - type: Components
+    url: components/sidechef-components.yml
+  - type: Lifecycle
+    url: lifecycle/sidechef-lifecycle.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +80,57 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.sidechef.com/
+- type: DeveloperPortal
+  url: https://www.sidechef.com/business/
+- type: Documentation
+  url: https://business.sidechef.com/sb-documentation
+- type: APIReference
+  url: https://business.sidechef.com/sb-documentation
+- type: Support
+  url: https://www.sidechef.com/business/contact-us
+- type: Blog
+  url: https://www.sidechef.com/business/insights
+- type: TermsOfService
+  url: https://www.sidechef.com/terms/
+- type: PrivacyPolicy
+  url: https://www.sidechef.com/privacy-policy/
+- type: Deprecation
+  url: lifecycle/sidechef-lifecycle.yml
+- type: Lifecycle
+  url: lifecycle/sidechef-lifecycle.yml
+- type: ChangeLog
+  url: changelog/sidechef-changelog.yml
+- type: Components
+  url: components/sidechef-components.yml
+- type: Authentication
+  url: authentication/sidechef-authentication.yml
+- type: Conventions
+  url: conventions/sidechef-conventions.yml
+- type: ErrorCatalog
+  url: errors/sidechef-problem-types.yml
+- type: Conformance
+  url: conformance/sidechef-conformance.yml
+- type: Plans
+  url: plans/sidechef-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/sidechef-rate-limits.yml
+- type: Packages
+  url: packages/sidechef-packages.yml
+- type: LLMsTxt
+  url: llms/sidechef-llms.txt
+- type: DomainSecurity
+  url: security/sidechef-domain-security.yml
+x-api-base-note: >-
+  repair-api-bases.py reports `disagreement` because the two API entries name two different
+  registrable hosts. This is correct and deliberate, not a defect: the v3 REST surface is
+  served from SideChef's primary domain (www.sidechef.com/v3/, confirmed by a live 401 JSON
+  response), while the Shoppable Button bundle is served from www.scgrocery.net, SideChef's
+  own widget-delivery domain named as the loader host in SideChef's published integration
+  documentation. Both bases were read from SideChef's own docs and probes; neither was
+  guessed from a domain.
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v1

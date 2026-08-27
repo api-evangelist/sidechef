@@ -1,0 +1,102 @@
+generated: '2026-08-27'
+method: probed
+source: live HTTP probes, 2026-08-27
+note: >-
+  Every /.well-known/ path was probed on all three SideChef-controlled hosts and every one
+  returned 404. No document was served, so NO WellKnown, APICatalog or SecurityTxt pointer
+  is asserted in apis.yml. This file records a verified absence, which is valid data — it
+  is not a claim that SideChef serves these surfaces.
+result: all-404
+documents_served: 0
+hosts:
+- host: www.sidechef.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  note: >-
+    All responses are the site's HTML 404 page (text/html), correctly returning status 404
+    rather than a soft-200.
+- host: api.sidechef.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  note: >-
+    api.sidechef.com resolves and answers 200 at the root, but serves the same AMP
+    marketing site as www; it is not an API host despite the name.
+- host: business.sidechef.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  note: >-
+    Webflow-hosted; returns a distinctive "Invalid .well-known request" body with a 404
+    status for every path under /.well-known/.
+- host: www.scgrocery.net
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  note: The widget delivery host; serves the same 404 page as www.sidechef.com.
+other_probes:
+- url: https://www.sidechef.com/llms.txt
+  status: 404
+- url: https://business.sidechef.com/llms.txt
+  status: 404
+- url: https://www.sidechef.com/apis.json
+  status: 404

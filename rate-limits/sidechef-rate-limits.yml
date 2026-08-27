@@ -1,0 +1,38 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://business.sidechef.com/sb-documentation and live unauthenticated probes of the
+  /v3/ surface
+limit_count: 0
+published: false
+note: >-
+  SideChef documents no rate limits anywhere on its public surface, and no rate-limit
+  response headers were observed. The only public technical document is the Shoppable
+  Button integration guide, which covers markup and events but says nothing about quotas,
+  throttling or 429 behaviour. Because the v3 REST surface is 401-gated to anonymous
+  callers, live headers cannot be observed without partner credentials. An honest zero.
+limits: []
+response_headers:
+  observed: []
+  checked:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - RateLimit
+  - RateLimit-Policy
+  - Retry-After
+  note: None of these headers were present on any observed response.
+status_on_exhaustion: not documented
+crawler_throttling:
+  note: >-
+    The only published throttling of any kind is a robots.txt crawl-delay of 60 seconds
+    applied to Scrapy, PetalBot and Timpibot. That is a crawler courtesy directive, not an
+    API rate limit, and is recorded here only so it is not mistaken for one.
+  source: https://www.sidechef.com/robots.txt
+evidence:
+- url: https://www.sidechef.com/v3/widget/recipes/
+  status: 401
+- url: https://business.sidechef.com/sb-documentation
+  status: 200
+- url: https://www.sidechef.com/robots.txt
+  status: 200

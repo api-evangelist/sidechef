@@ -1,0 +1,38 @@
+generated: '2026-08-27'
+method: searched
+source: https://www.sidechef.com/business/
+plan_count: 0
+published: false
+model: contact-sales
+note: >-
+  SideChef publishes no pricing page, no plan tiers, no quotas and no rates on any public
+  host. /business/pricing returns 404 and every product page terminates in a "Schedule A
+  Demo" or "Contact Us" form. Commercial models are named without numbers: campaign
+  products are described as CPM (Brand Awareness Campaign) and CPO / cost-per-order
+  (In-Recipe Campaign), and the RecipeAdapt AI adapter is referred to in the Shoppable
+  Button documentation as requiring a licence, but no price, tier, included quota or
+  overage rate is stated anywhere. An honest zero, not an omission.
+plans: []
+commercial_models_named:
+- id: cpm
+  name: Brand Awareness Campaign
+  basis: cost per mille
+  price: not published
+  source: https://www.sidechef.com/business/
+- id: cpo
+  name: In-Recipe Campaign
+  basis: cost per order
+  price: not published
+  source: https://www.sidechef.com/business/
+- id: license
+  name: RecipeAdapt AI adapter
+  basis: licence
+  price: not published
+  source: https://business.sidechef.com/sb-documentation
+evidence:
+- url: https://www.sidechef.com/business/pricing
+  status: 404
+- url: https://www.sidechef.com/business/
+  status: 200
+- url: https://www.sidechef.com/business/contact-us
+  status: 200

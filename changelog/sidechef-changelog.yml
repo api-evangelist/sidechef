@@ -1,0 +1,42 @@
+generated: '2026-08-27'
+method: searched
+source: https://business.sidechef.com/sb-documentation-v1
+scheme: >-
+  SideChef publishes no product-wide, dated changelog. The only dated revision history
+  found on any public SideChef surface is the change log kept at the foot of the Shoppable
+  Button documentation pages, which records changes to the component and to the document
+  itself.
+scope: Shoppable Button component documentation only
+current_version: v2
+entries:
+- version: v2
+  date: '2025-12-24'
+  breaking: true
+  highlights:
+  - Shoppable Button v2 released on a new loader URL (https://www.scgrocery.net/widget/v2/).
+  - Version 1 deprecated on the same date and cloned to a labeled version page.
+  - >-
+    Retailer selection consolidated from data-enabled-grocers / data-disabled-grocers into
+    a single ordered data-retailers attribute.
+  - Theming moved from data-text-color / data-bg-color attributes to CSS custom properties.
+  source: https://business.sidechef.com/sb-documentation-v1
+- version: v1
+  date: '2025-11-25'
+  breaking: false
+  highlights:
+  - Component naming updated to "Shoppable Button".
+  source: https://business.sidechef.com/sb-documentation-v1
+- version: v1
+  date: '2025-04-03'
+  breaking: false
+  highlights:
+  - FAQ and troubleshooting section added to the integration documentation.
+  source: https://business.sidechef.com/sb-documentation-v1
+gaps:
+- No changelog for the v3 REST surface.
+- No release notes feed, RSS, or dated release index at a company level.
+evidence:
+- url: https://business.sidechef.com/sb-documentation-v1
+  status: 200
+- url: https://business.sidechef.com/sb-documentation
+  status: 200
