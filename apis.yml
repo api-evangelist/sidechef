@@ -12,6 +12,17 @@ description: >-
   per partner and SideChef publishes no OpenAPI, developer portal or public API reference;
   the only public technical documentation is the Shoppable Button integration guide, and
   API access runs through a contact-sales motion.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/63b6aab1b5182398d5ad85ad/67bd6fdbf07c15c096431062_Bannerimg-1.png
 url: https://raw.githubusercontent.com/api-evangelist/sidechef/refs/heads/main/apis.yml
 x-type: company
