@@ -23,6 +23,21 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Requires approval
+  confidence: medium
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://cdn.prod.website-files.com/63b6aab1b5182398d5ad85ad/67bd6fdbf07c15c096431062_Bannerimg-1.png
 url: https://raw.githubusercontent.com/api-evangelist/sidechef/refs/heads/main/apis.yml
 x-type: company
